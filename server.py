@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request
 from twilio.util import TwilioCapability
+from twilio.rest import TwilioPricingClient
 import twilio.twiml
 
 # Account Sid and Auth Token can be found in your account dashboard
@@ -66,6 +67,27 @@ def welcome():
   resp.say("Welcome to Twilio")
   return str(resp)
 
+@app.route('/price', methods=['GET', 'POST'])
+ def price():
+   account_sid = os.environ.get("ACCOUNT_SID", ACCOUNT_SID)
+  auth_token = os.environ.get("AUTH_TOKEN", AUTH_TOKEN)
+
+    resp = twilio.twiml.Response()
+  from_value = request.values.get('From')
+  to = request.values.get('To')
+  
+  client = TwilioPricingClient(account_sid, auth_token)
+  number = client.voice.numbers.get(to);
+  
+print number.iso_country
+print number.price_unit
+print number.outbound_call_price.call_base_price
+print number.inbound_call_price.call_base_price # None if the number is not Twilio-hosted
+  
+  resp.say("Price outbound "+number.outbound_call_price.call_base_price)
+  return str(resp) 
+  
+  
 if __name__ == "__main__":
   port = int(os.environ.get("PORT", 5000))
   app.run(host='0.0.0.0', port=port, debug=True)
