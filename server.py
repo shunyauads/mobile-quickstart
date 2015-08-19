@@ -67,7 +67,7 @@ def welcome():
   return str(resp)
 
 @app.route('/price', methods=['GET', 'POST'])
- def price():
+def price():
   account_sid = os.environ.get("ACCOUNT_SID", ACCOUNT_SID)
   auth_token = os.environ.get("AUTH_TOKEN", AUTH_TOKEN)
 
