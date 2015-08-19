@@ -77,7 +77,7 @@ def welcome():
   to = request.values.get('To')
   
   client = TwilioPricingClient(account_sid, auth_token)
-  number = client.voice.numbers.get(to);
+  number = client.voice.numbers.get(to)
   
 print number.iso_country
 print number.price_unit
