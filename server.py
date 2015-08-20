@@ -77,9 +77,9 @@ def price():
   to = request.values.get('To')
   
   client = TwilioPricingClient(account_sid, auth_token)
-  number = client.voice.numbers.get(to)
+  number = client.voice.numbers.get("+12176154633")
   
-  resp.say("Price outbound "+number.outbound_call_price.call_base_price)
+  resp.say("Price outbound "+number.outbound_call_price['current_price'])
   return str(resp) 
   
   
